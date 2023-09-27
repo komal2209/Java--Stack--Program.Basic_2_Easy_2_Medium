@@ -1,0 +1,41 @@
+Parenthesis Checker
+class Solution
+{
+    //Function to check if brackets are balanced or not.
+    
+    static boolean matching(char a,char b)
+    {
+        if((a=='(' && b==')') || (a=='{' && b=='}') ||(a=='[' && b==']') )
+          return true;
+        
+        return false;
+        
+    }
+    static boolean ispar(String x)
+    {
+        // add your code here
+        Deque<Character> st=new ArrayDeque<Character>();
+        for(int i=0;i<x.length();i++)
+        {
+            char ch=x.charAt(i);
+            
+            if( ch=='(' ||ch=='{' ||ch=='[')
+                st.push(ch);
+            else
+            {
+                if(!st.isEmpty())
+                {
+                    char top=st.peek();
+                    if(matching(top,ch)==true)
+                        st.pop();
+                    else
+                         return false;
+                }
+                else
+                   return false;
+            }
+            
+        }
+        return(st.isEmpty()==true);
+    }
+}

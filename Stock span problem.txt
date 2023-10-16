@@ -1,0 +1,124 @@
+Stock span problem
+
+Example 1:
+Input: 
+N = 7, price[] = [100 80 60 70 60 75 85]
+Output:
+1 1 1 2 1 4 6
+Explanation:
+Traversing the given input span for 100 
+will be 1, 80 is smaller than 100 so the 
+span is 1, 60 is smaller than 80 so the 
+span is 1, 70 is greater than 60 so the 
+span is 2 and so on. Hence the output will 
+be 1 1 1 2 1 4 6.
+
+Example 2:
+Input: 
+N = 6, price[] = [10 4 5 90 120 80]
+Output:
+1 1 2 4 5 1
+Explanation:
+Traversing the given input span for 10 
+will be 1, 4 is smaller than 10 so the 
+span will be 1, 5 is greater than 4 so 
+the span will be 2 and so on. Hence, the 
+output will be 1 1 2 4 5 1.
+
+------------------------------------------------------------------------------
+ Time Complexity: O(N^2).
+ Auxiliary Space: O(N).
+class Solution
+{
+   
+    //Function to calculate the span of stockâ€™s price for all n days.
+    public static int[] calculateSpan(int price[], int n)
+    {
+        // Your code here
+     int[] ar= new int[n];
+     int k=0;
+     for(int i=0;i<n;i++)
+     { 
+        int j;
+        for( j=i-1;j>=0;j--)
+        {
+           if(price[j]>price[i])
+           {
+               ar[k]=j;
+               break;
+           }
+        }
+       if(j==-1)
+       {
+        ar[k]=-1;
+       }
+      k++;   
+         
+     }
+    
+    for(int j=0;j<n;j++)
+    {
+        price[j]=j-ar[j];
+    }
+        return price;
+    }
+    
+}
+
+
+----------------------------------------------------------------
+ Time Complexity: O(N).
+ Auxiliary Space: O(N).
+
+class Solution
+{
+   
+    //Function to calculate the span of stockâ€™s price for all n days.
+    public static int[] calculateSpan(int price[], int n)
+    {
+        // Your code here
+     ArrayList<Integer> al= new ArrayList<Integer>();
+     Stack<Integer> st=new Stack<Integer>();
+     for(int i=0;i<n;i++)
+     { 
+         if(st.isEmpty())
+         {
+             al.add(-1);
+             st.push(i);
+         }
+         else if(!st.isEmpty() && price[st.peek()]>price[i])
+         {
+            
+             al.add(st.peek());
+             st.push(i);
+         }
+         else if(!st.isEmpty() && price[st.peek()]<=price[i])
+         {
+
+           while(!st.isEmpty() && price[st.peek()]<=price[i])
+           {
+              st.pop();
+           }
+           if(st.isEmpty())
+           {
+               al.add(-1);
+               st.push(i);
+           }
+           else
+           {
+               al.add(st.peek());
+               st.push(i);
+           }
+
+         }
+         
+     }
+    
+    for(int j=0;j<al.size();j++)
+    {
+        price[j]=j-al.get(j);
+    }
+        return price;
+    }
+    
+}

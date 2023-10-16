@@ -1,0 +1,36 @@
+Prefix to Infix Conversion
+Example 1:
+
+Input: 
+*-A/BC-/AKL
+Output: 
+((A-(B/C))*((A/K)-L))
+Explanation: 
+The above output is its valid infix form.
+------------------------------------------------------------------
+ Time Complexity: O(N).
+ Auxiliary Space: O(N).
+
+class Solution {
+    static String preToInfix(String pre_exp) {
+        // code here
+        
+        Stack<String> val=new Stack<String>();
+        for(int i=pre_exp.length()-1;i>=0;i--)
+        {
+            char ch=pre_exp.charAt(i);
+            if(ch>='a' && ch<='z' || ch>='A' && ch<='Z')
+            {
+                val.push(String.valueOf(ch));
+            }
+            else
+            {
+               String v1=val.pop();
+               String v2=val.pop();
+               val.push("("+v1+String.valueOf(ch)+v2+")");
+            }
+            
+        }
+        return val.pop();
+    }
+}

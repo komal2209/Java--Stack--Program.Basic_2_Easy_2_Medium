@@ -1,0 +1,107 @@
+Insert an Element at the Bottom of a Stack.
+
+Example 1:
+Input:
+N = 5
+X = 2
+St = {4,3,2,1,8}
+Output:
+{2,4,3,2,1,8}
+Explanation:
+After insertion of 2, the final stack will be {2,4,3,2,1,8}.
+ 
+
+Example 2:
+Input:
+N = 3
+X = 4
+St = {5,3,1}
+Output:
+{4,5,3,1}
+Explanation:
+After insertion of 4, the final stack will be {4,5,3,1}.
+-------------------------------------------------------Recursive Solution---------------------------------------------------
+Time Complexity: O(N)
+ Auxiliary Space: O(N)
+
+class Solution {
+  void  solve(Stack<Integer> St, int X)
+  {
+      //base condition
+      if(St.isEmpty())
+      {
+          St.push(X);
+          return;
+      }
+      
+      int num=St.peek();
+      St.pop();
+      
+      solve(St,X);
+      St.push(num);
+      
+  }
+    
+    public Stack<Integer> insertAtBottom(Stack<Integer> St, int X) {
+        
+      solve(St,X);
+      
+        return St;
+    }
+}
+
+ 
+----------------------------------------------------------Iterative Solution------------------------------------------------
+ Time Complexity: O(N)
+ Auxiliary Space: O(N)
+
+class Solution {
+    public Stack<Integer> insertAtBottom(Stack<Integer> St, int X) {
+        
+        
+        Stack<Integer> temp=new  Stack<Integer>();
+        
+        while(!St.isEmpty())
+        {
+            
+            temp.push(St.peek());
+            
+            St.pop();
+        }
+        St.push( X);
+        
+         while(!temp.isEmpty())
+        {
+            
+            St.push(temp.peek());
+            
+            temp.pop();
+        }
+        
+        return St;
+    }
+}
+
+------------------------------------------------------USING ARRAYLIST-------------------------------------------------------------
+ Time Complexity: O(N)
+ Auxiliary Space: O(N)
+class Solution {
+    
+    public Stack<Integer> insertAtBottom(Stack<Integer> St, int X) {
+        
+   ArrayList<Integer> al=new ArrayList<Integer>();
+   while(!St.isEmpty())
+   {
+       
+       al.add(St.peek());
+       St.pop();
+   }
+      
+      St.push(X);
+      for(int i=al.size()-1;i>=0;i--)
+      {
+         St.push(al.get(i)); 
+      }
+        return St;
+    }
+}

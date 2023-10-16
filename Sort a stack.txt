@@ -1,0 +1,108 @@
+Sort a stack
+Example 1:
+
+Input:
+Stack: 3 2 1
+Output: 3 2 1
+Example 2:
+
+Input:
+Stack: 11 2 32 3 41
+Output: 41 32 11 3 2
+--------------------------------------------------------------Using ArrayList(iterative solution)-------------------------------------------------
+ Time Complexity: O(NlogN)
+ Space Complexity: O(N)
+class GfG{
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+		//add code here.
+		int i=0;
+		 java.util.ArrayList<Integer> arr=new  java.util.ArrayList<Integer> ();
+		while(!s.isEmpty())
+		{
+		
+		   arr.add(s.peek());
+		    s.pop();
+		
+		}
+        java.util.Collections.sort(arr);
+       
+       for(int j=0;j<arr.size();j++)
+       {     
+       s.push(arr.get(j));
+       }
+		
+	return s;
+	}
+}
+
+------------------------------------------------------------Using Array(iterative solution)---------------------------------------------------------
+ Time Complexity: O(NlogN)
+ Space Complexity: O(N)
+class GfG{
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+		//add code here.
+		int i=0;
+		int[] arr=new int[s.size()];
+		while(!s.isEmpty())
+		{
+		    arr[i]=s.peek();
+		    s.pop();
+		    i++;
+		}
+        java.util.Arrays.sort(arr);
+       
+       for(int j=0;j<arr.length;j++)
+       {
+         int num=arr[j];
+         s.push(num);
+
+       }
+		
+		return s;
+	}
+}
+
+---------------------------------------------------------------------Recusrive Solution-------------------------------------------------------------
+Time Complexity: O(N*N)
+ Space Complexity: O(N)
+class GfG{
+    
+    void sorting(Stack<Integer> s,int x)
+    {
+      
+          if(s.isEmpty() || s.peek()<x)
+          {
+              s.push(x);
+              return;
+          }
+          int num1=s.peek();
+          s.pop();
+          sorting(s,x);
+          s.push(num1);
+    }
+    void solve(Stack<Integer> s)
+    {
+        if(s.isEmpty())
+        {
+            return;
+        }
+        int num=s.peek();
+        s.pop();
+        solve(s);
+        sorting(s,num);
+        
+    }
+    
+    
+    
+	public Stack<Integer> sort(Stack<Integer> s)
+	{
+	
+	solve(s);
+	
+		
+		return s;
+	}
+}

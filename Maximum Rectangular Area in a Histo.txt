@@ -1,0 +1,217 @@
+Maximum Rectangular Area in a Histogram
+
+
+Find the largest rectangular area possible in a given histogram where the largest rectangle can be made of a number of contiguous bars. For simplicity, assume that all bars have the same width and the width is 1 unit, there will be N bars height of each bar will be given by the array arr.
+
+Example 1:
+
+Input:
+N = 7
+arr[] = {6,2,5,4,5,1,6}
+Output: 12
+Explanation: In this example the largest area would be 12 of height 4 and width 3. We can achieve this 
+area by choosing 3rd, 4th and 5th bars.
+
+
+Example 2:
+
+Input:
+N = 8
+arr[] = {7 2 8 9 1 3 6 5}
+Output: 16
+Explanation: Maximum size of the histogram 
+will be 8  and there will be 2 consecutive 
+histogram. And hence the area of the 
+histogram will be 8x2 = 16.
+
+Expected Time Complxity : O(N)
+Expected Auxilliary Space : O(N)
+-------------------------------------------------------------------------------------------
+class Solution
+{
+    //Function to find largest rectangular area possible in a given histogram.
+    public static long getMaxArea(long hist[], long n) 
+    {
+        // your code here
+        int len=(int)n;
+        long[] ansleft=new long[len]; 
+        long[] ansright=new long[len]; 
+
+        Stack<Integer> stright=new Stack<Integer>();
+        Stack<Integer> stleft=new Stack<Integer>();
+        long pseudoindex=-1L;
+        for(int i=0;i<len;i++)
+        {
+            if(stleft.isEmpty())
+            {
+            ansleft[i]=-1L;
+            stleft.push(i);
+            }
+            else if(!stleft.isEmpty() && hist[stleft.peek()]<hist[i])
+            {
+                ansleft[i]=stleft.peek();
+                stleft.push(i);
+
+            }
+            
+            else if(!stleft.isEmpty() && hist[stleft.peek()]>=hist[i])
+            {
+               while(!stleft.isEmpty() && hist[stleft.peek()]>=hist[i])
+                {
+                   stleft.pop();
+                }
+                     
+                     if(stleft.isEmpty())
+                     {
+                     ansleft[i]=-1L;
+                     stleft.push(i);
+
+                     }
+                      else
+                      {
+                       ansleft[i]=stleft.peek();
+                         stleft.push(i);
+                      }
+             }
+        }
+
+          pseudoindex=n;
+         for(int i=len-1;i>=0;i--)
+        {
+            if(stright.isEmpty())
+            {
+                ansright[i]=pseudoindex;
+                            stright.push(i);
+            }
+
+            
+            else if(!stright.isEmpty() && hist[stright.peek()]<hist[i])
+            {
+                ansright[i]=stright.peek();
+                            stright.push(i);
+
+            }
+            
+            else if(!stright.isEmpty() && hist[stright.peek()]>=hist[i])
+            {
+               while(!stright.isEmpty() && hist[stright.peek()]>=hist[i])
+                {
+                   stright.pop();
+                }
+                     
+                     if(stright.isEmpty())
+                     {
+                        ansright[i]=pseudoindex;
+                          stright.push(i);
+
+                     }
+                        
+                      else
+                      {
+                        ansright[i]=stright.peek();
+                         stright.push(i);
+
+                      } 
+                        
+             }
+        }
+        
+        
+       int j=0,k=0;int z=0;
+        long res = Integer.MIN_VALUE;
+
+        for(int i=0; i<len; i++)
+        {
+            long width=ansright[i]-ansleft[j]-1;
+            long area=width*hist[i];
+            res=Math.max(res,area);
+            j++;
+        }
+       
+       return res; 
+        
+    }
+        
+}
+---------------------------------------------------------------------------------------------------------------------------------
+class Solution
+{
+    //Function to find largest rectangular area possible in a given histogram.
+    public static long getMaxArea(long hist[], long n) 
+    {
+        // your code here
+        int len=(int)n;
+        long[] ansleft=new long[len]; 
+        long[] ansright=new long[len]; 
+
+        Stack<Integer> stright=new Stack<Integer>();
+        Stack<Integer> stleft=new Stack<Integer>();
+        long pseudoindex=-1L;
+        for(int i=0;i<len;i++)
+        {
+         
+               while(!stleft.isEmpty() && hist[stleft.peek()]>=hist[i])
+                {
+                   stleft.pop();
+                }
+                     
+                     if(stleft.isEmpty())
+                     {
+                     ansleft[i]=-1L;
+                     stleft.push(i);
+
+                     }
+                      else
+                      {
+                       ansleft[i]=stleft.peek();
+                         stleft.push(i);
+                      }
+             
+        }
+
+          pseudoindex=n;
+         for(int i=len-1;i>=0;i--)
+        {
+            
+            
+               while(!stright.isEmpty() && hist[stright.peek()]>=hist[i])
+                {
+                   stright.pop();
+                }
+                     
+                     if(stright.isEmpty())
+                     {
+                        ansright[i]=pseudoindex;
+                          stright.push(i);
+
+                     }
+                        
+                      else
+                      {
+                        ansright[i]=stright.peek();
+                         stright.push(i);
+
+                      } 
+                        
+             
+        }
+        
+        
+    
+        long res = Integer.MIN_VALUE;
+
+        for(int i=0; i<len; i++)
+        {
+            long width=ansright[i]-ansleft[i]-1;
+            long area=width*hist[i];
+            res=Math.max(res,area);
+            
+        }
+       
+       return res; 
+        
+    }
+        
+}
+
+

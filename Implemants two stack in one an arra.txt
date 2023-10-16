@@ -1,0 +1,124 @@
+Implemants two stack in one an array.
+---------------------------------------Naive Approach------------------------
+
+class twoStacks
+{
+    int arr[];
+    int size;
+    int top1, top2;
+    twoStacks()
+    {
+        size = 100; 
+        arr = new int[100]; 
+        top2 = size/2; 
+        top1 = (size/2)+1;
+    }
+    //Function to push an integer into the stack1.
+    void push1(int x)
+    {
+        if(top1>0)
+        {
+            top1--;
+            arr[top1]=x;
+        }
+       
+     
+    }
+    //Function to push an integer into the stack2.
+    void push2(int x)
+    {
+        if(top2<size-1)
+        {
+              top2++;
+            arr[top2]=x;
+
+        }
+    }
+    //Function to remove an element from top of the stack1.
+    int pop1()
+    {
+        if(top1<=size/2)
+        {
+            int res=arr[top1];
+            top1++;
+            return res;
+        }
+        return -1;
+    }
+    //Function to remove an element from top of the stack2.
+    int pop2()
+    {
+         if(top2>=size/2+1)
+        {
+            int res=arr[top2];
+            top2--;
+            return res;
+        }
+        return -1;*
+        
+    }
+}
+
+---------------------------------------------------------Efficient Approach----------------------------------------------
+//stack1 data store in start of an array, so top1++;(push time)
+// stack2 data store in end of an array, so top2--; (push time)
+
+Time complexit=O(1)
+Space Complexity=O(1)
+
+class twoStacks
+{
+    int arr[];
+    int size;
+    int top1, top2;
+    twoStacks()
+    {
+        size = 100; 
+        arr = new int[100]; 
+        top1 = -1; 
+        top2 = size;
+    }
+    //Function to push an integer into the stack1.
+    void push1(int x)
+    {
+        if(top2-top1>1)
+        {
+            top1++;
+            arr[top1]=x;
+        }
+       
+     
+    }
+    //Function to push an integer into the stack2.
+    void push2(int x)
+    {
+        if(top2-top1>1)
+        {
+            top2--;
+            arr[top2]=x;
+        }
+    }
+    //Function to remove an element from top of the stack1.
+    int pop1()
+    {
+        if(top1>=0)
+        {
+            int res=arr[top1];
+            top1--;
+            return res;
+        }
+        return -1;
+    }
+    //Function to remove an element from top of the stack2.
+    int pop2()
+    {
+         if(top2<size)
+        {
+            int res=arr[top2];
+            top2++;
+            return res;
+        }
+        return -1;
+        
+    }
+}

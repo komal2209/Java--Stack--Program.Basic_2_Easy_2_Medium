@@ -1,0 +1,98 @@
+Next Greater Element
+------------------------------------------------Naive Approach-------------------------------------------------------------------------------------------------------
+Time Complexity=O(n^2)
+Space Complexity=O(n)
+class Solution
+{
+    //Function to find the next greater element for each element of the array.
+    public static long[] nextLargerElement(long[] arr, int n)
+    { 
+        // Your code here
+        int k=0;
+        
+       long[] ar=new long[n];
+        for(int i=0;i<n-1;i++)
+        {
+            int j;
+           
+           for( j=i+1;j<n;j++)
+           {
+               if(arr[j]>arr[i])
+               {
+                   ar[k]=arr[j];
+                   break;
+               }
+           }
+           if(j==n)
+           {
+               ar[k]=-1;
+           }
+           k++;
+        }
+        
+        ar[n-1]=-1;
+       return ar;
+
+    } 
+}
+-------------------------------------------------------------------Efficient Approach------------------------------------------------------------------------------------
+Time Complexity=O(n^2)
+Space Complexity=O(n)
+class Solution
+{
+    //Function to find the next greater element for each element of the array.
+    public static long[] nextLargerElement(long[] arr, int n)
+    { 
+        // Your code here
+        ArrayList<Long> ar=new ArrayList<Long>();
+        Stack<Long> st=new Stack<Long>();
+
+        
+        for(int i=n-1;i>=0;i--)
+        {
+           if(st.isEmpty())
+           {
+               ar.add(-1L);
+               st.push(arr[i]);
+               
+           }
+           
+           else if(st.peek()>arr[i] && (!st.isEmpty()))
+           {
+               ar.add(st.peek());
+               st.push(arr[i]);
+           }
+           else if(st.peek()<=arr[i] &&(!st.isEmpty()))
+           {
+               
+               while(!st.isEmpty() && st.peek()<=arr[i])
+               {
+                   st.pop();
+               }
+               if(st.isEmpty())
+               {
+                   ar.add(-1L);
+                   st.push(arr[i]);
+               }
+               else{
+                   ar.add(st.peek());
+                   st.push(arr[i]);
+               }
+           }
+
+           
+        }
+        
+        Collections.reverse(ar);
+
+        long[] al=new long[n];
+
+        for(int i=0;i<ar.size();i++)
+        {
+            al[i]=ar.get(i);
+
+        }
+          return al;  
+        
+    } 
+}

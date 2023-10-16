@@ -1,0 +1,118 @@
+Infix to Postfix
+
+Input: str = "a+b*(c^d-e)^(f+g*h)-i"
+Output: abcd^e-fgh*+^*+i-
+Explanation:
+After converting the infix expression 
+into postfix expression, the resultant 
+expression will be abcd^e-fgh*+^*+i-
+Example 2:
+
+Input: str = "A*(B+C)/D"
+Output: ABC+*D/
+Explanation:
+After converting the infix expression 
+into postfix expression, the resultant 
+expression will be ABC+*D/
+
+--------------------------------------------------------------------------
+class Solution {
+    // Function to convert an infix expression to a postfix expression.
+    public static String infixToPostfix(String exp) {
+        // Your code here
+        
+        Stack<String> val=new Stack<>();
+        Stack<Character> op=new Stack<>();
+       
+       for(int i=0;i<exp.length();i++)
+       {
+           char ch=exp.charAt(i);
+           
+           if(ch>='a' && ch<='z' || ch>='A' && ch<='Z' || Character.isDigit(ch))
+           {
+               val.push(String.valueOf(ch));
+           }
+          else if(ch=='(' || op.size()==0)
+           {
+               op.push(ch);
+           }
+           
+           else if(ch==')')
+           {
+               while(op.peek()!='(' && !op.isEmpty())
+               {
+                   String v2=val.pop();
+                   String v1=val.pop();
+                   char opp=op.pop();
+                   String res= v1+v2+String.valueOf(opp);
+                   val.push(res);
+               }
+               op.pop();
+           }
+           else 
+           {
+               if(ch=='+' || ch=='-')
+               {
+                  while(!op.isEmpty() && op.peek()=='*' ||  !op.isEmpty() && op.peek()=='/'|| !op.isEmpty() && op.peek()=='^'||!op.isEmpty() && op.peek()=='+' ||  !op.isEmpty() && op.peek()=='-')
+                  {
+                     String v2=val.pop();
+                     String v1=val.pop();
+                     char opp=op.pop();
+                     String res= v1+v2+String.valueOf(opp);
+                     val.push(res);  
+                  }
+                     op.push(ch);
+               }
+               else 
+               {
+                   if(ch=='*' || ch=='/' )
+                   {
+                       while(!op.isEmpty() && op.peek()=='*' ||  !op.isEmpty() && op.peek()=='/'|| !op.isEmpty() && op.peek()=='^')
+                       {
+                          String v2=val.pop();
+                          String v1=val.pop();
+                          char opp=op.pop();
+                          String res= v1+v2+String.valueOf(opp);
+                          val.push(res);
+                       }
+                      op.push(ch);
+                      if( !op.isEmpty() && op.peek()=='+' || !op.isEmpty() && op.peek()=='-')
+                      {
+                          op.push(ch);
+                      }
+                   }
+                   else if(ch=='^')
+                   {
+                       while(!op.isEmpty() && op.peek()=='^' && !val.isEmpty())
+                       {
+                           String v2=val.pop();
+                           String v1=val.pop();
+                           char opp=op.pop();
+                           String res= v1+v2+String.valueOf(opp);
+                             val.push(res);
+                       }
+                        op.push(ch);
+                       
+                        if(!op.isEmpty() && (op.peek()=='(' || op.peek()=='+' || op.peek()=='-' || op.peek()=='/' ||op.peek()=='*'))
+                       {
+                           op.push(ch);
+                       }
+                       
+                   }
+                  
+               }
+               
+           }
+       }
+         while(val.size()>1 && !op.isEmpty()) 
+          {
+              String v2=val.pop();
+             String v1=val.pop();
+             char opp=op.pop();
+             String res=v1+v2+String.valueOf(opp);
+             val.push(res);
+         }
+         
+        return val.peek();
+    }
+}

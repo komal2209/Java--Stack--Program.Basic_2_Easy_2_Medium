@@ -1,0 +1,89 @@
+Delete middle element of a stack
+Middle element:- floor((size_of_stack+1)/2) (1-based indexing) from bottom of the stack.
+Example 1:
+
+Input: 
+Stack = {10, 20, 30, 40, 50}
+Output:
+ModifiedStack = {10, 20, 40, 50}
+Explanation:
+If you print the stack the bottom-most element will be 10 and the top-most element will be 50. Middle element will be element at index 3 from bottom, which is 30. Deleting 30, stack will look like {10 20 40 50}.
+Example 2:
+
+Input: 
+Stack = {10 20 30 40}
+Output:
+ModifiedStack = {10 30 40}
+Explanation:
+If you print the stack the bottom-most element will be 10 and the top-most element will be 40. Middle element will be element at index 2 from bottom, which is 20. Deleting 20, stack will look like {10 30 40}.
+-------------------------------------------------------------recursie solution------------------------------------------
+Time Complexity: O(N)
+ Auxiliary Space: O(N)
+class Solution
+{
+    
+    void solve(Stack<Integer>s,int mid,int count)
+    {
+      //base condition 
+       if(count==mid)
+       {
+           s.pop();
+           return ;
+       }
+       
+       count++;
+       int num=s.peek();
+       
+       s.pop();
+       solve(s,mid,count);
+       s.push(num);
+       
+       
+       
+        
+    }
+    //Function to delete middle element of a stack.
+    public void deleteMid(Stack<Integer>s,int sizeOfStack){
+        // code here
+        int mid=sizeOfStack/2;
+        int count=0;
+        
+        solve(s,mid,count);
+       
+            
+    }
+}
+
+-----------------------------------------------------------------------------------------------------------
+Time Complexity: O(N)
+ Auxiliary Space: O(N)
+
+class Solution
+{
+    //Function to delete middle element of a stack.
+    public void deleteMid(Stack<Integer>s,int sizeOfStack){
+        // code here
+        Stack<Integer> temp=new Stack<Integer>();
+        int mid=sizeOfStack/2;
+        int count=0;
+        
+        while(!s.isEmpty() && count<mid)
+        {
+            temp.push(s.peek());
+             
+             s.pop();
+            count++;
+        }
+            s.pop();
+
+        while(!temp.isEmpty())
+        {
+             s.push(temp.peek());
+             temp.pop();
+        }
+        
+        
+       
+            
+    }
+}

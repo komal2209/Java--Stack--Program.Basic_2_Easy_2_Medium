@@ -1,0 +1,41 @@
+Trapping Rain Water
+
+EXAMPLE 1
+Input:
+N = 6
+arr[] = {3,0,0,2,0,4}
+Output:
+10
+----------------------------------------------------------
+Time Complexity=O(N)
+Space complexity=O(N)
+class Solution{
+    
+    // arr: input array
+    // n: size of array
+    // Function to find the trapped water between the blocks.
+    static long trappingWater(int arr[], int n) { 
+        // Your code here
+        int[] arright=new int[n];
+        int[] arrleft=new int[n];
+        arrleft[0]=arr[0];
+        arright[n-1]=arr[n-1];
+        
+        for(int i=1;i<n;i++)
+        {
+            arrleft[i]=Math.max(arrleft[i-1],arr[i]);
+        }
+        
+        for(int i=n-2;i>=0;i--)
+        {
+            arright[i]=Math.max(arright[i+1],arr[i]);
+        }
+        long sum=0;
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=Math.min(arrleft[i],arright[i])-arr[i];
+            sum=sum+arr[i];
+        }
+        return sum;
+    } 
+}

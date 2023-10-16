@@ -1,0 +1,69 @@
+Get minimum element from stack
+ 
+Input:
+push(2)
+push(3)
+pop()
+getMin()
+push(1)
+getMin()
+Output: 2 1
+Explanation: In the first test case for
+query 
+push(2)  Insert 2 into the stack.
+         The stack will be {2}
+push(3)  Insert 3 into the stack.
+         The stack will be {2 3}
+pop()    Remove top element from stack 
+         Poped element will be 3 the
+         stack will be {2}
+getMin() Return the minimum element
+         min element will be 2 
+push(1)  Insert 1 into the stack.
+         The stack will be {2 1}
+getMin() Return the minimum element
+         min element will be 1
+-----------------------------------------------------------------------------------
+class GfG
+{
+    Stack<Integer> s;
+    Stack<Integer> ss;
+
+    // Constructor    
+    GfG()
+	{
+        s = new Stack<>();
+        ss = new Stack<>();
+	}
+	
+    int getMin()
+    {
+	if(ss.isEmpty())
+	    return -1;
+	 else
+	  return ss.peek();  
+    }
+    
+    int pop()
+    {
+        if(s.isEmpty())
+        return -1;
+        
+        int ans=s.peek();
+        s.pop();
+        
+        if(!ss.isEmpty() && ans==ss.peek())
+         ss.pop();
+        
+      return ans;
+    }
+
+    void push(int x)
+    {
+    	s.push(x);
+    	if(ss.size()==0 || x<=ss.peek())
+	    ss.push(x);
+    }
+    
+    
+}

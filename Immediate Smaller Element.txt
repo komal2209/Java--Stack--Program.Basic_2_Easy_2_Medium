@@ -1,0 +1,111 @@
+Immediate Smaller Element
+
+Example 1:
+Input:
+N = 5
+Arr[] = {4, 2, 1, 5, 3}
+Output:
+2 1 -1 3 -1
+Explanation: Array elements are 4, 2, 1, 5
+3. Next to 4 is 2 which is smaller, so we
+print 2. Next of 2 is 1 which is smaller,
+so we print 1. Next of 1 is 5 which is
+greater, so we print -1. Next of 5 is 3
+which is smaller, so we print 3.  Note
+that for last element, output is always 
+going to be -1 because there is no element
+on right.
+
+Example 2:
+Input:
+N = 6
+Arr[] = {5, 6, 2, 3, 1, 7}
+Output:
+-1 2 -1 1 -1 -1
+Explanation: Next to 5 is 6 which is
+greater, so we print -1.Next of 6 is 2
+which is smaller, so we print 2. Next
+of 2 is 3 which is greater, so we
+print -1. Next of 3 is 1 which is
+smaller, so we print 1. Next of 1 is
+7 which is greater, so we print -1.
+Note that for last element, output is
+always going to be -1 because there is
+no element on right.
+-------------------------------------------------------------------------using two for loop-------------------------------------------------------------------
+ Time Complexity: O(N)
+ Auxiliary Space: O(N)
+class Solution {
+    void immediateSmaller(int arr[], int n) {
+        // code here
+        int k=0;
+        int ar[]=new int[n];
+        Stack<Integer> st=new Stack<Integer> ();
+        for(int i=0;i<n-1;i++)
+        {
+            int j;
+          for( j=i+1;j<n;j++)
+          {
+              if(arr[j]<arr[i])
+              {
+                  ar[k]=arr[j];
+                  break;
+              }
+              else
+              {
+                 ar[k]=-1;
+                 break;
+              }
+          }
+          k++;
+        
+        }
+        
+        ar[n-1]=-1;
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=ar[i];
+        }
+        
+    }
+}
+
+
+--------------------------------------------------------------------------using stack---------------------------------------------------------------------
+ Time Complexity: O(N)
+ Auxiliary Space: O(N)
+class Solution {
+    void immediateSmaller(int arr[], int n) {
+        // code here
+        int k=0;
+        int ar[]=new int[n];
+        Stack<Integer> st=new Stack<Integer> ();
+        for(int i=n-1;i>=0;i--)
+        {
+            if(st.isEmpty())
+            {
+             ar[i]=-1;
+             st.push(arr[i]);
+
+            }
+            else if(!st.isEmpty() && st.peek()<arr[i])
+            {
+                ar[i]=st.peek();
+                st.push(arr[i]);
+            }
+            else if(!st.isEmpty() && st.peek()>=arr[i])
+            {
+                ar[i]=-1;
+                 st.push(arr[i]);
+
+            }
+        
+        }
+        
+        for(int i=0;i<n;i++)
+        {
+            arr[i]=ar[i];
+        }
+        
+    }
+}

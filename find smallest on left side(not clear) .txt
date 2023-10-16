@@ -1,0 +1,24 @@
+find smallest on left side 
+class Solution{
+    static List<Integer> leftSmaller(int n, int a[])
+    {
+        //code here
+         List<Integer> al=new ArrayList<Integer>();
+         al.add(-1);
+         int res=a[0];
+         for(int i=1;i<n;i++)
+         {
+             
+             if(res<a[i])
+             {
+                 al.add(res);
+             }
+             else
+             {
+                 al.add(-1);
+                 res=a[i];
+             }
+         }
+         return al;
+    }
+}
